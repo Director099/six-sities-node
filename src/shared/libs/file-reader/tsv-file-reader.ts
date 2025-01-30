@@ -1,84 +1,38 @@
-import {readFileSync} from 'node:fs';
+import EventEmitter from 'node:events';
+import { createReadStream } from 'node:fs';
 import {FileReader} from './file-reader.interface.js';
 
-export class TSVFileReader implements FileReader {
-  #rawData = '';
+const CHUNK_SIZE = 16384; // 16KB
 
-  constructor(
+export class TSVFileReader extends EventEmitter implements FileReader {
+  constructor (
     private readonly filename: string
   ) {
+    super();
   }
 
-  public read(): void {
-    this.#rawData = readFileSync(this.filename, {encoding: 'utf-8'});
-  }
+  public async read(): Promise<void> {
+    const readStream = createReadStream(this.filename, {
+      highWaterMark: CHUNK_SIZE,
+      encoding: 'utf-8',
+    });
 
-  toArray() {
-    if (!this.#rawData) {
-      throw new Error('File was not read');
+    let remainingData = '';
+    let nextLinePosition = -1;
+    let importedRowCount = 0;
+
+    for await (const chunk of readStream) {
+      remainingData += chunk.toString();
+
+      while ((nextLinePosition = remainingData.indexOf('\n')) >= 0) {
+        const completeRow = remainingData.slice(0, nextLinePosition + 1);
+        remainingData = remainingData.slice(++nextLinePosition);
+        importedRowCount++;
+
+        this.emit('line', completeRow);
+      }
     }
 
-    return this.#rawData
-      .split('\n')
-      .filter((row) => row.trim().length > 0)
-      .map((line) => line.split('\t'))
-      .map(([
-        title,
-        description,
-        date, preview,
-        images, isPremium,
-        isFavorite,
-        rating,
-        type,
-        bedrooms,
-        maxAdults,
-        price,
-        comfort,
-        name,
-        email,
-        avatarUrl,
-        password,
-        isPro,
-        cityName,
-        location,
-        commentsDescription,
-        commentsDate,
-        commentsRating,
-      ]) => ({
-        title,
-        description,
-        date: new Date(date),
-        preview,
-        images: images.split(';'),
-        isPremium: Boolean(isPremium),
-        isFavorite: Boolean(isFavorite),
-        rating: Number(rating),
-        type,
-        bedrooms: Number(bedrooms),
-        maxAdults: Number(maxAdults),
-        price: Number(price),
-        comfort: comfort.split(';'),
-        host: {
-          name,
-          email,
-          avatarUrl,
-          password,
-          isPro: Boolean(isPro)
-        },
-        city: {
-          name: cityName,
-          location: {
-            latitude: location.split(';')[0],
-            longitude: location.split(';')[1],
-          },
-        },
-        comments: {
-          description: commentsDescription,
-          date: new Date(commentsDate),
-          rating: Number(commentsRating),
-        }
-      }));
+    this.emit('end', importedRowCount);
   }
 }
-
-//2022-01-06T08:45:40.283Z	5 	sdfsdf;asdfsadfsadf
