@@ -1,4 +1,4 @@
-import got from 'got'; // todo: new data
+import got from 'got'; // todo: fetch
 import { ICommand } from './command.interface.js';
 import { MockServerDataType } from '../../shared/types/index.js';
 import { TSVOfferGenerator } from '../../shared/libs/offer-generator/index.js';
