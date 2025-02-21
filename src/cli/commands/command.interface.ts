@@ -4,5 +4,6 @@
  */
 export interface ICommand {
   getName(): string;
-  execute(...params: string[]): void;
+  execute(...parameters: string[]): void;
 }
+

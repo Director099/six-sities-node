@@ -20,31 +20,35 @@
       "Мир населяют не только люди. Иные живут вместе с ними и визуально ничем не отличаются. История про магию и могущественных существ. Борьба сил Добра и Зла."
     ],
     "cityNames": [
-      "Ufa",
-      "Togliatti"
+      "Paris",
+      "Cologne",
+      "Brussels",
+      "Amsterdam",
+      "Hamburg",
+      "Dusseldorf"
     ],
     "users": [
-      "Иван Иванов",
-      "Олег Сидоров",
-      "Пьер Безухов",
-      "Роланд Дискейн",
-      "Холи Гибни",
-      "Джек Торренс",
-      "Антон Городецкий",
-      "Борис Гесер",
-      "Рокки Бальбоа",
-      "Джон Смит"
+      "Иван",
+      "Олег",
+      "Пьер",
+      "Роланд",
+      "Холи",
+      "Джек",
+      "Антон",
+      "Борис",
+      "Рокки",
+      "Джон"
     ],
     "emails": [
-      "snow@pisem.local",
-      "president@dka.local",
-      "fish@big.local",
-      "test@pisem.local",
-      "freedom@pisem.local",
-      "rolan@pochta.local",
-      "author@mir.local",
-      "test@lost.loca",
-      "kujo-fan@story.local"
+      "snow@gmail.com",
+      "president@gmail.com",
+      "fish@gmail.com",
+      "test@mail.ru",
+      "freedom@mail.ru",
+      "rolan@mail.ru",
+      "author@yandex.ru",
+      "test@mail.ru",
+      "kujo-fan@gmail.com"
     ],
     "images": [
       "institute-book-1.jpg",
@@ -65,8 +69,8 @@
       "Fridge"
     ],
     "previews": [
-      "https://i.sutochno.ru/tCdRxlgpB_h5SC4zO_GBnMT0thgirW0L-qmOGh7hShY/rs:fit:1920:1080/el:1/czM6Ly9zdGF0aWMuc3V0b2Nobm8ucnUvZG9jL2ZpbGVzL29iamVjdHMvMS81Mi84ODkvNjNkODI0ZTU5ODIyNi5qcGc.webp",
-      "https://i.sutochno.ru/tCdRxlgpB_h5SC4zO_GBnMT0thgirW0L-qmOGh7hShY/rs:fit:1920:1080/el:1/czM6Ly9zdGF0aWMuc3V0b2Nobm8ucnUvZG9jL2ZpbGVzL29iamVjdHMvMS81Mi84ODkvNjNkODI0ZTU5ODIyNi5qcGc-123123123123123.webp"
+      "https://i.sutochno.ru/tCdRxlgpB_h5SC4zO_GBnMT0thgirW0L-qmOGh7hShY/rs:fit:1920:1080/el:1/czM6Ly9zdGF0aWMuc3V0b2Nobm8ucnUvZG9jL2ZpbGVzL29iamVjdHMvMS81Mi84ODkvNjNkODI0ZTU5ODIyNi5qcGc.jpg",
+      "https://i.sutochno.ru/tCdRxlgpB_h5SC4zO_GBnMT0thgirW0L-qmOGh7hShY/rs:fit:1920:1080/el:1/czM6Ly9zdGF0aWMuc3V0b2Nobm8ucnUvZG9jL2ZpbGVzL29iamVjdHMvMS81Mi84ODkvNjNkODI0ZTU5ODIyNi5qcGc-123123123123123.jpg"
     ],
     "avatarUrls": [
       "user.jpg",
@@ -77,10 +81,10 @@
       "coffee.jpg"
     ],
     "types": [
-      "apartment",
-      "house",
-      "room",
-      "hotel"
+      "Apartment",
+      "House",
+      "Room",
+      "Hotel"
     ],
     "commentsDescriptions": [
       "Потрясающий вид из окна на город! Завтрак просто огонь - особенно японские роллы. Персонал очень вежливый. Единственный минус - небольшой номер, но для одного человека самое то.",

@@ -1,13 +1,17 @@
-export type ComfortType = 'Breakfast' | 'Air conditioning' | 'Laptop friendly workspace' | 'Baby seat' | 'Washer' | 'Towels' | 'Fridge';
+export enum HousingType {
+  Room = 'Room',
+  Apartment = 'Apartment',
+  House = 'House',
+  Hotel = 'Hotel',
+}
 
-export type HousingType = 'apartment' | 'house' | 'room' | 'hotel';
-
-export type CityType = {
-  name: string,
-  location: {
-    latitude: number,
-    longitude: number,
-  }
+export enum CityNames {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf'
 }
 
 export type CommentsType = {
@@ -16,19 +20,25 @@ export type CommentsType = {
   rating: number,
 };
 
+export type ComfortType = 'Breakfast' | 'Air conditioning' | 'Laptop friendly workspace' | 'Baby seat' | 'Washer' | 'Towels' | 'Fridge';
+
 export type HostType = {
   isPro: boolean,
   name: string,
   avatarUrl: string,
   email: string,
-  password: string,
 };
+
+export type LocationType = {
+  latitude: number,
+  longitude: number,
+}
 
 export type OfferType = {
   title: string,
   description: string,
   date: Date,
-  city: CityType,
+  city: CityNames,
   comfort: ComfortType[],
   preview: string,
   type: HousingType,
@@ -40,13 +50,16 @@ export type OfferType = {
   rating: number,
   bedrooms: number,
   maxAdults: number,
-  comments: CommentsType
+  commentCount: number,
+  comments: CommentsType,
+  location: LocationType
 }
 
+//todo это не офер создай отдельный файл
 export type MockServerDataType = {
   titles: string[],
   descriptions: string[],
-  cityNames: string[],
+  cityNames: CityNames[],
   comforts: ComfortType[],
   previews: string[],
   types: HousingType[],

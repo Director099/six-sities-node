@@ -1,4 +1,4 @@
-import {ComfortType, HousingType, OfferType} from "../types/index.js";
+import {CityNames, ComfortType, HousingType, OfferType} from "../types/index.js";
 
 export const createOffer = (offerData: string): OfferType => {
   const [
@@ -25,6 +25,7 @@ export const createOffer = (offerData: string): OfferType => {
     commentsDescription,
     commentsDate,
     commentsRating,
+    commentCount
   ] = offerData.replace('\n', '').split('\t');
 
   const host = {
@@ -33,14 +34,6 @@ export const createOffer = (offerData: string): OfferType => {
     avatarUrl,
     password,
     isPro: Boolean(isPro)
-  };
-
-  const city = {
-    name: cityName,
-    location: {
-      latitude: Number(location.split(';')[0]),
-      longitude: Number(location.split(';')[1]),
-    },
   };
 
   const comments = {
@@ -64,7 +57,12 @@ export const createOffer = (offerData: string): OfferType => {
     price: Number(price),
     comfort: comfort.split(';') as ComfortType[],
     host,
-    city,
+    city: CityNames[cityName as keyof typeof CityNames],
     comments,
+    location: {
+      latitude: Number(location.split(';')[0]),
+      longitude: Number(location.split(';')[1]),
+    },
+    commentCount: Number(commentCount)
   };
 };
