@@ -1,3 +1,3 @@
-export interface FileWriter {
+export interface IFileWriter {
   write(row: string): void;
 }

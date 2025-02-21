@@ -1,5 +1,5 @@
 import {defaultClasses, getModelForClass, modelOptions, prop, Ref, Severity} from '@typegoose/typegoose';
-import { CityNames, ComfortType, HousingType, LocationType } from '../../types/index.js';
+import { ComfortType, HousingType, LocationType } from '../../types/index.js';
 import {TitleLength, DescriptionLength, Rating, Price, BedroomsCount, GuestCount} from "../../constants/index.js";
 import {UserEntity} from "../user/index.js";
 
@@ -40,12 +40,12 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   })
   maxAdults!: number;
 
-  @prop({
-    type: () => String,
-    required: true,
-    enum: CityNames,
-  })
-  city!: CityNames;
+  // @prop({
+  //   type: () => String,
+  //   required: true,
+  //   enum: CityNames,
+  // })
+  // city!: CityNames;
 
   @prop({
     required: true,
@@ -115,8 +115,8 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   })
   type: HousingType;
 
-  @prop({ default: 0 })
-  commentCount!: number;
+  // @prop({ default: 0 })
+  // commentCount!: number;
 
   @prop({
     ref: UserEntity,

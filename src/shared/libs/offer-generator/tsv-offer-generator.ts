@@ -1,7 +1,7 @@
-import dayjs from 'dayjs'; //TODO: new Date
-import { OfferGenerator } from './offer-generator.interface.js';
-import {MockServerDataType} from '../../types/index.js';
+import dayjs from 'dayjs';
+import {MockServerDataType} from "../../types/index.js";
 import { getRandomItem, generateRandomValue, getRandomItems } from '../../helpers/index.js';
+import { IOfferGenerator } from './offer-generator.interface.js';
 
 const MIN_PRICE = 500;
 const MAX_PRICE = 2000;
@@ -19,11 +19,9 @@ const Bedrooms = {
   MAX: 4
 };
 
-const PASSWORD = '930609';
-
 const LOCATION = '48.85661;2.351499';
 
-export class TSVOfferGenerator implements OfferGenerator {
+export class TSVOfferGenerator implements IOfferGenerator {
   constructor(private readonly mockData: MockServerDataType) {}
 
   generate(): string {
@@ -54,7 +52,7 @@ export class TSVOfferGenerator implements OfferGenerator {
       title, description, createdDate, preview,
       images, isPremium, isFavorite, rating,
       type, bedrooms, maxAdults, price, comfort,
-      userName, email, avatarUrl, PASSWORD, isPro,
+      userName, email, avatarUrl, isPro,
       cityName, LOCATION,
       commentsDescription, createdDate, rating
     ].join('\t');

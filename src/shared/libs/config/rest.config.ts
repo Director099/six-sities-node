@@ -25,7 +25,7 @@ export class RestConfig implements IConfig<RestSchemaType> {
     this.logger.info('.env file found and successfully parsed!');
   }
 
-  public get<T extends keyof RestSchemaType>(key: T): RestSchemaType[T] {
+  get<T extends keyof RestSchemaType>(key: T): RestSchemaType[T] {
     return this.config[key];
   }
 }

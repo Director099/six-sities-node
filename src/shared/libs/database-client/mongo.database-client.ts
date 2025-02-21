@@ -10,20 +10,20 @@ const RETRY_TIMEOUT = 1000;
 
 @injectable()
 export class MongoDatabaseClient implements IDatabaseClient {
-  private mongoose: typeof Mongoose;
-  private isConnected: boolean;
+  #mongoose: typeof Mongoose;
+  #isConnected: boolean;
 
   constructor(
     @inject(Component.Logger) private readonly logger: ILogger
   ) {
-    this.isConnected = false;
+    this.#isConnected = false;
   }
 
-  public isConnectedToDatabase() {
-    return this.isConnected;
+  isConnectedToDatabase() {
+    return this.#isConnected;
   }
 
-  public async connect(uri: string): Promise<void> {
+  async connect(uri: string): Promise<void> {
     if (this.isConnectedToDatabase()) {
       throw new Error('MongoDB client already connected');
     }
@@ -33,8 +33,8 @@ export class MongoDatabaseClient implements IDatabaseClient {
     let attempt = 0;
     while (attempt < RETRY_COUNT) {
       try {
-        this.mongoose = await Mongoose.connect(uri);
-        this.isConnected = true;
+        this.#mongoose = await Mongoose.connect(uri);
+        this.#isConnected = true;
         this.logger.info('Database connection established.');
         return;
       } catch (error) {
@@ -47,13 +47,13 @@ export class MongoDatabaseClient implements IDatabaseClient {
     throw new Error(`Unable to establish database connection after ${RETRY_COUNT}`);
   }
 
-  public async disconnect(): Promise<void> {
+  async disconnect(): Promise<void> {
     if (!this.isConnectedToDatabase()) {
       throw new Error('Not connected to the database');
     }
 
-    await this.mongoose.disconnect?.();
-    this.isConnected = false;
+    await this.#mongoose.disconnect?.();
+    this.#isConnected = false;
     this.logger.info('Database connection closed.');
   }
 }
