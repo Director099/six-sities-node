@@ -1,12 +1,12 @@
-import {readFileSync} from 'node:fs';
-import {resolve} from 'node:path';
-import {ICommand} from './command.interface.js';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { ICommand } from './command.interface.js';
 
-type PackageJsonConfig = {
+type PackageJSONConfig = {
   version: string;
 }
 
-const isPackageJSONConfig = (value: unknown): value is PackageJsonConfig =>
+const isPackageJSONConfig = (value: unknown): value is PackageJSONConfig =>
   typeof value === 'object' &&
   value !== null &&
   !Array.isArray(value) &&
@@ -17,7 +17,7 @@ export class VersionCommand implements ICommand {
     private readonly filePath: string = './package.json'
   ) {}
 
-  #readVersion() {
+  #readVersion(): string {
     const jsonContent = readFileSync(resolve(this.filePath), 'utf-8');
     const importedContent: unknown = JSON.parse(jsonContent);
 
@@ -28,11 +28,11 @@ export class VersionCommand implements ICommand {
     return importedContent.version;
   }
 
-  getName() {
+  getName(): string {
     return '--version';
   }
 
-  async execute(..._params: string[]): Promise<void> {
+  async execute(..._parameters: string[]): Promise<void> {
     try {
       const version = this.#readVersion();
       console.info(version);
