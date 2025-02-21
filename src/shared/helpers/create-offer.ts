@@ -2,37 +2,18 @@ import {CityNames, ComfortType, HousingType, OfferType} from "../types/index.js"
 
 export const createOffer = (offerData: string): OfferType => {
   const [
-    title,
-    description,
-    date,
-    preview,
-    images,
-    isPremium,
-    isFavorite,
-    rating,
-    type,
-    bedrooms,
-    maxAdults,
-    price,
-    comfort,
-    name,
-    email,
-    avatarUrl,
-    password,
-    isPro,
-    cityName,
-    location,
-    commentsDescription,
-    commentsDate,
-    commentsRating,
-    commentCount
+    title, description, date, preview,
+    images, isPremium, isFavorite, rating,
+    type, bedrooms, maxAdults, price, comfort,
+    name, email, avatarUrl, isPro,
+    cityName, location,
+    commentsDescription, commentsDate, commentsRating, commentsCount,
   ] = offerData.replace('\n', '').split('\t');
 
   const host = {
     name,
     email,
     avatarUrl,
-    password,
     isPro: Boolean(isPro)
   };
 
@@ -63,6 +44,6 @@ export const createOffer = (offerData: string): OfferType => {
       latitude: Number(location.split(';')[0]),
       longitude: Number(location.split(';')[1]),
     },
-    commentCount: Number(commentCount)
+    commentCount: Number(commentsCount)
   };
 };

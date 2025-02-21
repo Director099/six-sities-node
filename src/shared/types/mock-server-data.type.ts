@@ -11,4 +11,5 @@ export type MockServerDataType = {
   users: string[]
   avatarUrls: string[],
   emails: string[],
+  commentsDescriptions: string[],
 }

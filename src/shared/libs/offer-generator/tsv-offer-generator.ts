@@ -42,7 +42,8 @@ export class TSVOfferGenerator implements IOfferGenerator {
     const rating = getRandomItem([Rating.MIN, Rating.MAX]);
     const bedrooms = getRandomItem([Bedrooms.MIN, Bedrooms.MAX]);
     const maxAdults = generateRandomValue(1, 5);
-    const commentsDescription = getRandomItem<string>(this.mockData.descriptions);
+    const commentsDescription = getRandomItem<string>(this.mockData.commentsDescriptions);
+    const commentsCount = generateRandomValue(1, 5);
 
     const createdDate = dayjs()
       .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day')
@@ -54,7 +55,7 @@ export class TSVOfferGenerator implements IOfferGenerator {
       type, bedrooms, maxAdults, price, comfort,
       userName, email, avatarUrl, isPro,
       cityName, LOCATION,
-      commentsDescription, createdDate, rating
+      commentsDescription, createdDate, rating, commentsCount,
     ].join('\t');
   }
 }
