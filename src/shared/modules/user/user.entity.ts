@@ -1,6 +1,6 @@
 import { defaultClasses, getModelForClass, prop, modelOptions } from '@typegoose/typegoose';
 import {HostType} from '../../types/index.js';
-import {NameLength, DEFAULT_AVATAR} from "../../constants/user.js";
+import {NameLength, DEFAULT_AVATAR} from "../../constants/index.js";
 import { createSHA256 } from '../../helpers/index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging

@@ -4,7 +4,7 @@ import { Component } from '../../types/index.js';
 import { ILogger } from '../../libs/logger/index.js';
 import { IUserService } from './user-service.interface.js';
 import { UserEntity } from './user.entity.js';
-import { CreateUserDto } from './dto/create-user.dto.js';
+import { CreateUserDto, UpdateUserDto } from './dto/index.js';
 
 @injectable()
 export class DefaultUserService implements IUserService {
@@ -24,6 +24,12 @@ export class DefaultUserService implements IUserService {
 
   async findByEmail(email: string): Promise<DocumentType<UserEntity> | null> {
     return this.userModel.findOne({email});
+  }
+
+  async updateById(userId: string, dto: UpdateUserDto): Promise<DocumentType<UserEntity> | null> {
+    return this.userModel
+      .findByIdAndUpdate(userId, dto, { new: true })
+      .exec();
   }
 
   async findOrCreate(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>> {
