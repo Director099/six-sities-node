@@ -1,3 +1,6 @@
+import { ClassConstructor, plainToInstance } from 'class-transformer';
+import {CityNames} from "../types/offer.type.js";
+
 export function generateRandomValue(min:number, max: number, numAfterDigit = 0) {
   return +((Math.random() * (max - min)) + min).toFixed(numAfterDigit);
 }
@@ -14,4 +17,31 @@ export function getRandomItem<T>(items: T[]):T {
 
 export function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : '';
+}
+
+export function fillDTO<T, V>(someDto: ClassConstructor<T>, plainObject: V) {
+  return plainToInstance(someDto, plainObject, { excludeExtraneousValues: true });
+}
+
+export function createErrorObject(message: string) {
+  return {
+    error: message,
+  };
+}
+
+export function checkString(data: unknown) {
+  return typeof data === 'string' && data;
+}
+
+export function capitalizeFirstLetter(string: string) {
+  return string.trim().charAt(0).toUpperCase() + string.slice(1);
+}
+
+export function checkCity(city: string) {
+  const formattedCity = capitalizeFirstLetter(city);
+
+  return (
+    Object.values(CityNames).includes(formattedCity as CityNames) &&
+    (formattedCity as CityNames)
+  );
 }

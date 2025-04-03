@@ -1,11 +1,11 @@
 import { DocumentType, types } from '@typegoose/typegoose';
 import { inject, injectable } from 'inversify';
-import { IOfferService } from './offer-service.interface.js';
+import {OfferCount, DEFAULT_COMMENT_COUNT} from "../../constants/index.js";
 import { Component, SortType } from '../../types/index.js';
 import { ILogger } from '../../libs/logger/index.js';
-import {OfferCount, DEFAULT_COMMENT_COUNT} from "../../constants/index.js";
-import { OfferEntity } from './offer.entity.js';
+import { IOfferService } from './types/index.js';
 import { CreateOfferDto, UpdateOfferDto } from './dto/index.js';
+import { OfferEntity } from './offer.entity.js';
 
 @injectable()
 export class DefaultOfferService implements IOfferService {
@@ -14,13 +14,10 @@ export class DefaultOfferService implements IOfferService {
     @inject(Component.OfferModel) private readonly offerModel: types.ModelType<OfferEntity>
   ) {}
 
-  #usersLookup = [
+  #addFieldId = [
     {
-      $lookup: {
-        from: 'users',
-        localField: 'userId',
-        foreignField: '_id',
-        as: 'users',
+      $addFields: {
+        id: '$_id',
       },
     },
   ];
@@ -29,8 +26,8 @@ export class DefaultOfferService implements IOfferService {
     {
       $lookup: {
         from: 'comments',
-        let: { offerId: '$_id' },
-        pipeline: [{ $match: { $expr: { $eq: ['$offerId', '$$offerId'] } } }],
+        localField: '_id',
+        foreignField: 'offerId',
         as: 'comments',
       },
     },
@@ -73,7 +70,6 @@ export class DefaultOfferService implements IOfferService {
           },
         },
         ...this.#commentsLookup,
-        ...this.#usersLookup,
       ])
       .exec()
       .then(([result]) => result ?? null);
@@ -105,11 +101,14 @@ export class DefaultOfferService implements IOfferService {
   async find(count?: number): Promise<DocumentType<OfferEntity>[]> {
     const limit = count ?? DEFAULT_COMMENT_COUNT;
 
-    return this.offerModel
-      .find()
-      .sort({ createdAt: SortType.Down })
-      .limit(limit)
-      .populate('userId')
+    // TODO Надо ли возвращать user
+    return await this.offerModel
+      .aggregate([
+        ...this.#addFieldId,
+        ...this.#commentsLookup,
+        { $limit: limit },
+        { $sort: { createdAt: SortType.Down } },
+      ])
       .exec();
   }
 

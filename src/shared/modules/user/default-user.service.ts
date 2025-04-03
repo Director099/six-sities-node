@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { Component } from '../../types/index.js';
 import { ILogger } from '../../libs/logger/index.js';
-import { IUserService } from './user-service.interface.js';
+import { IUserService } from './types/index.js';
 import { UserEntity } from './user.entity.js';
 import { CreateUserDto, UpdateUserDto } from './dto/index.js';
 

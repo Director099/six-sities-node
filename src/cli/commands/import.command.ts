@@ -1,7 +1,7 @@
 import { ICommand } from './command.interface.js';
 import { TSVFileReader } from '../../shared/libs/file-reader/index.js';
 import { createOffer, getErrorMessage, getMongoURI } from '../../shared/helpers/index.js';
-import { IUserService } from '../../shared/modules/user/user-service.interface.js';
+import { IUserService } from '../../shared/modules/user/types/index.js';
 import { DefaultOfferService, OfferModel, IOfferService } from '../../shared/modules/offer/index.js';
 import { IDatabaseClient, MongoDatabaseClient } from '../../shared/libs/database-client/index.js';
 import { ILogger } from '../../shared/libs/logger/index.js';
