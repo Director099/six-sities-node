@@ -20,7 +20,7 @@ export class OfferController extends BaseController {
 
     this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.index });
     this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create });
-    this.addRoute({ path: '/:offerId', method: HttpMethod.Put, handler: this.updateById });
+    this.addRoute({ path: '/:offerId', method: HttpMethod.Patch, handler: this.updateById });
     this.addRoute({ path: '/:offerId', method: HttpMethod.Delete, handler: this.deleteById });
     this.addRoute({ path: '/:offerId', method:HttpMethod.Get, handler: this.findById });
     this.addRoute({ path: '/premium/:city', method:HttpMethod.Get, handler: this.findPremium });

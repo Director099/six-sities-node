@@ -1,6 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { CityNames, ComfortType, HousingType, LocationType } from '../../../types/index.js';
-import { UserRdo } from '../../user/rdo/user.rdo.js';
+import { UserRdo } from '../../user/index.js';
 
 export class OfferRdo {
   @Expose()

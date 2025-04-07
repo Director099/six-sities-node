@@ -59,11 +59,11 @@ Content-Type: application/json
 
 ## Обновление предложения
 
-PUT  http://localhost:5000/offers/67ee29d46798389c1e61b683/ HTTP/1.1
+PATCH  http://localhost:5000/offers/67ee29d46798389c1e61b683/ HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "test",
+  "title": "tes2t",
   "description": "test",
   "userId": "67ee29d46798389c1e61b683"
 }
@@ -72,7 +72,7 @@ Content-Type: application/json
 
 ## Получение списка премиальных предложений для города
 
-GET  http://localhost:5000/offers/premium/Amsterdam HTTP/1.1
+GET  http://localhost:5000/offers/premium/amsterdam HTTP/1.1
 Content-Type: application/json
 
 ###
