@@ -1,10 +1,11 @@
 import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
-import { ICommentService } from './comment-service.interface.js';
-import { Component } from '../../types/index.js';
+import {DEFAULT_COMMENT_COUNT} from "../../constants/comment.js";
+import {Component, SortType} from '../../types/index.js';
+import {ILogger} from "../../libs/logger/logger.interface.js";
 import { CommentEntity } from './comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
-import {ILogger} from "../../libs/logger/logger.interface.js";
+import { ICommentService } from './comment-service.interface.js';
 
 @injectable()
 export class DefaultCommentService implements ICommentService {
@@ -20,10 +21,15 @@ export class DefaultCommentService implements ICommentService {
     return comment;
   }
 
-  public async findByOfferId(offerId: string): Promise<DocumentType<CommentEntity>[]> {
+  public async findByOfferId(offerId: string, count?: number): Promise<DocumentType<CommentEntity>[]> {
+    const limit = count ?? DEFAULT_COMMENT_COUNT;
+
     return this.commentModel
-      .find({offerId})
-      .populate('userId');
+      .find({ offerId })
+      .sort({ createdAt: SortType.Down })
+      .limit(limit)
+      .populate('userId')
+      .exec();
   }
 
   public async deleteByOfferId(offerId: string): Promise<number> {

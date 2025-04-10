@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import {
-  BaseController,
-  HttpError,
-  HttpMethod,
-} from '../../libs/rest/index.js';
 import { inject, injectable } from 'inversify';
+import {
+  BaseController, DocumentExistsMiddleware,
+  HttpMethod, ValidateDtoMiddleware,
+  ValidateObjectIdMiddleware,
+} from '../../libs/rest/index.js';
 import { Component } from '../../types/index.js';
 import { ILogger } from '../../libs/logger/index.js';
-import { IOfferService } from '../offer/index.js';
 import { fillDTO } from '../../helpers/index.js';
+import { IOfferService, FindOfferRequestType } from '../offer/index.js';
 import { ICommentService } from './comment-service.interface.js';
 import { CommentRdo } from './rdo/comment.rdo.js';
+import {CreateCommentDto} from "./dto/create-comment.dto.js";
 
 @injectable()
 export class CommentController extends BaseController {
@@ -24,23 +24,37 @@ export class CommentController extends BaseController {
 
     this.logger.info('Register routes for CommentsController...');
 
-    this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create });
+    this.addRoute({
+      path: '/',
+      method: HttpMethod.Post,
+      handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateCommentDto)],
+    });
+    this.addRoute({
+      path: '/offerId',
+      method: HttpMethod.Get,
+      handler: this.findByOfferId,
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'id'),
+      ]
+    });
   }
 
-  public async create({ body } : Request, res: Response): Promise<void> {
+  async create({ body } : Request, res: Response): Promise<void> {
     const offerId = body.offerId;
-
-    if (! await this.offerService.exists(offerId)) {
-      throw new HttpError(
-        StatusCodes.NOT_FOUND,
-        `Offer with the specified id ${offerId} not found.`,
-        'CommentController'
-      );
-    }
-
     const comment = this.commentService.create(body);
 
     await this.offerService.incCommentCount(offerId);
     this.created(res, fillDTO(CommentRdo, comment));
+  }
+
+  async findByOfferId(
+    { params: { offerId} , query: { limit } }: FindOfferRequestType, res: Response
+  ): Promise<void> {
+
+    const comments = await this.commentService.findByOfferId(offerId, limit);
+
+    this.ok(res, fillDTO(CommentRdo, comments));
   }
 }

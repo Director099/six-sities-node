@@ -1,3 +1,6 @@
+export const PHOTO_QUANTITY = 6;
+export const IMAGE_REGEX = /\.(jpg|png)(\?.*)?$/i;
+
 export const OfferCount = {
   Default: 60,
   Premium: 3,
@@ -19,7 +22,7 @@ export const Rating = {
 };
 
 export const BedroomsCount = {
-  Min: 0,
+  Min: 1,
   Max: 8,
 };
 

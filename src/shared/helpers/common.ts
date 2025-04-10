@@ -50,3 +50,17 @@ export function checkCity(city: string) {
     (formattedCity as CityNames)
   );
 }
+
+export function getNumberOrUndefined(data: unknown) {
+  // eslint-disable-next-line no-extra-boolean-cast
+  if (!!checkString(data)) {
+    return Number.parseFloat(data as string);
+  }
+
+  // eslint-disable-next-line no-useless-return
+  return;
+}
+
+export function formatsObjectToString(obj: Record<string, string>) {
+  return Object.values(obj).join(', ');
+}
