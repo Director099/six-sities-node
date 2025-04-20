@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {MockServerDataType} from "../../types/index.js";
+import {MockServerDataType} from '../../types/index.js';
 import { getRandomItem, generateRandomValue, getRandomItems } from '../../helpers/index.js';
 import { IOfferGenerator } from './offer-generator.interface.js';
 

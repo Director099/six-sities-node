@@ -1,4 +1,4 @@
-import {CityNames} from "../../../types/offer.type.js";
+import {CityNames} from '../../../types/index.js';
 
 export type RequestQueryType = {
   limit?: number;

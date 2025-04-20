@@ -65,4 +65,4 @@ export const OfferValidationMessage = {
   userId: {
     invalidId: 'Field userId must be a valid id',
   },
-}
+};

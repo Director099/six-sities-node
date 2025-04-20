@@ -5,7 +5,7 @@ import {BaseController, HttpError, HttpMethod, ValidateDtoMiddleware} from '../.
 import { ILogger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import { IConfig, RestSchemaType } from '../../libs/config/index.js';
-import {CreateUserDto, LoginUserDto} from "./dto/index.js";
+import {CreateUserDto, LoginUserDto} from './dto/index.js';
 import { CreateUserRequestType, LoginUserRequestType, IUserService } from './types/index.js';
 
 @injectable()

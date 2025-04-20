@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
-import {DEFAULT_COMMENT_COUNT} from "../../constants/comment.js";
+import {DEFAULT_COMMENT_COUNT} from '../../constants/comment.js';
 import {Component, SortType} from '../../types/index.js';
-import {ILogger} from "../../libs/logger/logger.interface.js";
+import {ILogger} from '../../libs/logger/index.js';
 import { CommentEntity } from './comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
 import { ICommentService } from './comment-service.interface.js';

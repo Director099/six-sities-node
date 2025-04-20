@@ -16,7 +16,7 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
-import {CityNames, ComfortType, HousingType, LocationType} from "../../../types/index.js";
+import {CityNames, ComfortType, HousingType, LocationType} from '../../../types/index.js';
 import {
   BedroomsCount,
   DescriptionLength,
@@ -24,8 +24,8 @@ import {
   IMAGE_REGEX,
   PHOTO_QUANTITY, Price,
   TitleLength
-} from "../../../constants/offer.js";
-import {AmenitiesList, OfferValidationMessage} from "./offer.messages.js";
+} from '../../../constants/offer.js';
+import {AmenitiesList, OfferValidationMessage} from './offer.messages.js';
 
 export class CreateOfferDto {
   @MinLength(TitleLength.Min, {

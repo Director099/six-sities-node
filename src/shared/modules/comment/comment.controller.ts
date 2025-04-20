@@ -11,7 +11,7 @@ import { fillDTO } from '../../helpers/index.js';
 import { IOfferService, FindOfferRequestType } from '../offer/index.js';
 import { ICommentService } from './comment-service.interface.js';
 import { CommentRdo } from './rdo/comment.rdo.js';
-import {CreateCommentDto} from "./dto/create-comment.dto.js";
+import {CreateCommentDto} from './dto/create-comment.dto.js';
 
 @injectable()
 export class CommentController extends BaseController {

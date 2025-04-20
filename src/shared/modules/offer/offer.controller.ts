@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
-import {StatusCodes} from "http-status-codes";
+import {StatusCodes} from 'http-status-codes';
 import {
   BaseController, DocumentExistsMiddleware,
   HttpError,
@@ -11,16 +11,16 @@ import {
 import { ILogger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import {capitalizeFirstLetter, checkCity, fillDTO, getNumberOrUndefined} from '../../helpers/index.js';
-import {CommentRdo, ICommentService} from "../comment/index.js";
+import {CommentRdo, ICommentService} from '../comment/index.js';
 import {
   IOfferService,
   CreateOfferRequestType,
   UpdateOfferRequestType,
   ParamOfferIdType,
   FindOfferRequestType
-} from "./types/index.js";
+} from './types/index.js';
 import { OfferRdo } from './rdo/offer.rdo.js';
-import {CreateOfferDto, UpdateOfferDto} from "./dto/index.js";
+import {CreateOfferDto, UpdateOfferDto} from './dto/index.js';
 
 @injectable()
 export class OfferController extends BaseController {

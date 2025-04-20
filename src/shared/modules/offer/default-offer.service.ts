@@ -1,6 +1,6 @@
 import { DocumentType, types } from '@typegoose/typegoose';
 import { inject, injectable } from 'inversify';
-import {OfferCount, DEFAULT_COMMENT_COUNT} from "../../constants/index.js";
+import {OfferCount, DEFAULT_COMMENT_COUNT} from '../../constants/index.js';
 import { Component, SortType } from '../../types/index.js';
 import { ILogger } from '../../libs/logger/index.js';
 import { IOfferService } from './types/index.js';

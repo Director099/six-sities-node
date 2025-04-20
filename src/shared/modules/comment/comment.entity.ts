@@ -1,5 +1,5 @@
 import { defaultClasses, getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
-import {Rating, TextLength} from "../../constants/index.js";
+import {Rating, TextLength} from '../../constants/index.js';
 import { OfferEntity } from '../offer/index.js';
 import { UserEntity } from '../user/index.js';
 

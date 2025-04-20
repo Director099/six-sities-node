@@ -12,7 +12,7 @@ export const UserMessages = {
     matches: 'The image must match the format .jpg or .png',
   },
   isPro: {
-    invalid: `Field isPro must be an boolean`,
+    invalid: 'Field isPro must be an boolean',
   },
   password: {
     invalidFormat: 'Password is required',

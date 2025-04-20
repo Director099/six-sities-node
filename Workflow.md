@@ -38,6 +38,16 @@ npm run mock:server
 npm run cli -- --generate 5 ./mocks/mock-data.tsv http://localhost:3123/api
 ```
 
+#### Импортировать данные в базу данных MongoDB
+
+Команда импорта тестовых данных из файла `.tsv` в БД.
+
+> Вызывается после генерации моковых данных
+
+```bash
+npm run cli -- --import ./mocks/mock-data.tsv admin test localhost six-cities secrect
+```
+
 #### Скомпилировать проект
 
 ```bash

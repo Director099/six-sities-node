@@ -1,4 +1,4 @@
-import {CityNames, ComfortType, HousingType} from "./offer.type.js";
+import {CityNames, ComfortType, HousingType} from './offer.type.js';
 
 export type MockServerDataType = {
   titles: string[],
