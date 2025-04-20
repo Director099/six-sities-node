@@ -3,18 +3,18 @@ import { UserRdo } from '../../user/index.js';
 
 export class CommentRdo {
   @Expose({ name: '_id' })
-  id: string;
+  public id: string;
 
   @Expose()
-  description: string;
+  public description: string;
 
   @Expose()
-  rating: number;
+  public rating: number;
 
   @Expose({ name: 'createdAt'})
-  date: Date;
+  public date: Date;
 
   @Expose({ name: 'userId'})
   @Type(() => UserRdo)
-  author: UserRdo;
+  public author: UserRdo;
 }

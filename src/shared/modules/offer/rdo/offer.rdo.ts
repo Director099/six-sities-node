@@ -4,57 +4,57 @@ import { UserRdo } from '../../user/index.js';
 
 export class OfferRdo {
   @Expose()
-  id!: string;
+  public id!: string;
 
   @Expose()
-  title: string;
+  public title: string;
 
   @Expose()
-  description: string;
+  public description: string;
 
   @Expose()
-  date: Date;
+  public date: Date;
 
   @Expose()
-  city: CityNames;
+  public city: CityNames;
 
   @Expose()
-  preview: string;
+  public preview: string;
 
   @Expose()
-  images: string[];
+  public images: string[];
 
   @Expose()
-  isPremium: boolean;
+  public isPremium: boolean;
 
   @Expose()
-  isFavorite: boolean;
+  public isFavorite: boolean;
 
   @Expose()
-  rating: number;
+  public rating: number;
 
   @Expose()
-  type: HousingType;
+  public type: HousingType;
 
   @Expose()
-  bedrooms: number;
+  public bedrooms: number;
 
   @Expose()
-  maxAdults: number;
+  public maxAdults: number;
 
   @Expose()
-  price: number;
+  public price: number;
 
   @Expose()
-  comfort: ComfortType[];
+  public comfort: ComfortType[];
 
   @Expose()
-  commentCount: number;
+  public commentCount: number;
 
   @Expose({ name: 'userId' })
   @Type(() => UserRdo)
-  host: UserRdo;
+  public host: UserRdo;
 
   @Expose()
-  location: LocationType;
+  public location: LocationType;
 }

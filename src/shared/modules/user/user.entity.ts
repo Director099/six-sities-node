@@ -14,13 +14,14 @@ export interface UserEntity extends defaultClasses.Base {}
   }
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class UserEntity extends defaultClasses.TimeStamps implements HostType {
   @prop({
     required: true,
     unique: true,
     match: [EMAIL_REGEX, 'Email is incorrect'],
   })
-  email: string;
+  public email: string;
 
   @prop({
     required: false,
@@ -28,7 +29,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements HostType {
     match: [IMAGE_REGEX, 'The avatar image must match the format .jpg or .png'],
     default: DEFAULT_AVATAR,
   })
-  avatarUrl: string;
+  public avatarUrl: string;
 
   @prop({
     required: true,
@@ -36,13 +37,13 @@ export class UserEntity extends defaultClasses.TimeStamps implements HostType {
     maxlength: [NameLength.Max, `Max length for name is ${NameLength.Max}`],
     default: '',
   })
-  name!: string;
+  public name!: string;
 
   @prop({ required: true, default: false })
-  isPro: boolean;
+  public isPro: boolean;
 
   @prop({ required: true, default: '' })
-  password?: string;
+  public password?: string;
 
   constructor(userData: HostType) {
     super();

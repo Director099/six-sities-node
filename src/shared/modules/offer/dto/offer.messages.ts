@@ -1,6 +1,6 @@
-import {formatsObjectToString} from "../../../helpers/common.js";
-import {CityNames, HousingType, ComfortType} from "../../../types/offer.type.js";
-import {TitleLength, DescriptionLength, PHOTO_QUANTITY, BedroomsCount, GuestCount, Price} from "../../../constants/offer.js";
+import {formatsObjectToString} from '../../../helpers/common.js';
+import {CityNames, HousingType, ComfortType} from '../../../types/index.js';
+import {TitleLength, DescriptionLength, PHOTO_QUANTITY, BedroomsCount, GuestCount, Price} from '../../../constants/offer.js';
 
 export const AmenitiesList: ComfortType[] = [
   'Breakfast',

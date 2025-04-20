@@ -7,14 +7,14 @@ export class CreateCommentDto {
   @Length(TextLength.Min, TextLength.Max, {
     message: CommentMessages.description.lengthField,
   })
-  description: string;
+  public description: string;
 
   @IsOptional()
   @IsDateString(
     {},
     { message: CommentMessages.date.invalidFormat }
   )
-  date: Date;
+  public date: Date;
 
   @IsInt({ message: CommentMessages.rating.invalidFormat })
   @Min(Rating.Min, {
@@ -23,11 +23,11 @@ export class CreateCommentDto {
   @Max(Rating.Max, {
     message: CommentMessages.rating.maxValue,
   })
-  rating: number;
+  public rating: number;
 
   @IsMongoId({message: CommentMessages.offerId.invalidFormat})
-  offerId: string;
+  public offerId: string;
 
   @IsMongoId({message: CommentMessages.userId.invalidFormat})
-  userId: string;
+  public userId: string;
 }

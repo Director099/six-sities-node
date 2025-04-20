@@ -33,7 +33,7 @@ export class UpdateOfferDto {
   @MaxLength(TitleLength.Max, {
     message: OfferValidationMessage.title.maxLength,
   })
-  title: string;
+  public title: string;
 
   @MinLength(DescriptionLength.Min, {
     message: OfferValidationMessage.description.minLength,
@@ -41,40 +41,40 @@ export class UpdateOfferDto {
   @MaxLength(DescriptionLength.Max, {
     message: OfferValidationMessage.description.maxLength,
   })
-  description: string;
+  public description: string;
 
   @IsOptional()
   @IsDateString(
     {},
     { message: OfferValidationMessage.date.invalidFormat }
   )
-  date: Date;
+  public date: Date;
 
   @IsEnum(CityNames, {
     message: OfferValidationMessage.city.invalid,
   })
-  city: CityNames;
+  public city: CityNames;
 
   @IsIn(AmenitiesList, {
     each: true,
     message: OfferValidationMessage.comfort.invalid,
   })
-  comfort: ComfortType[];
+  public comfort: ComfortType[];
 
   @Matches(IMAGE_REGEX, {
     message: OfferValidationMessage.preview.matches,
   })
-  preview: string;
+  public preview: string;
 
   @IsEnum(HousingType, {
     message: OfferValidationMessage.type.invalid,
   })
-  type: HousingType;
+  public type: HousingType;
 
   @IsInt({ message: OfferValidationMessage.price.invalidFormat })
   @Min(Price.Min, { message: OfferValidationMessage.price.minValue })
   @Max(Price.Max, { message: OfferValidationMessage.price.maxValue })
-  price: number;
+  public price: number;
 
   @IsArray({ message: OfferValidationMessage.images.invalidFormat })
   @ArrayMinSize(PHOTO_QUANTITY, {
@@ -83,10 +83,10 @@ export class UpdateOfferDto {
   @ArrayMaxSize(PHOTO_QUANTITY, {
     message: OfferValidationMessage.images.ArraySize,
   })
-  images: string[];
+  public images: string[];
 
   @IsBoolean({ message: OfferValidationMessage.isPremium.invalidFormat })
-  isPremium: boolean;
+  public isPremium: boolean;
 
   @IsInt({ message: OfferValidationMessage.bedrooms.invalidFormat })
   @Min(BedroomsCount.Min, {
@@ -95,7 +95,7 @@ export class UpdateOfferDto {
   @Max(BedroomsCount.Max, {
     message: OfferValidationMessage.bedrooms.maxValue,
   })
-  bedrooms: number;
+  public bedrooms: number;
 
   @IsInt({ message: OfferValidationMessage.maxAdults.invalidFormat })
   @Min(GuestCount.Min, {
@@ -104,8 +104,8 @@ export class UpdateOfferDto {
   @Max(GuestCount.Max, {
     message: OfferValidationMessage.maxAdults.maxValue,
   })
-  maxAdults: number;
+  public maxAdults: number;
 
   @ValidateNested()
-  location: LocationType;
+  public location: LocationType;
 }

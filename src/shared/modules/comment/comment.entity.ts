@@ -22,7 +22,7 @@ export class CommentEntity extends defaultClasses.TimeStamps {
     maxlength: TextLength.Max,
     trim: true,
   })
-  description!: string;
+  public description!: string;
 
   @prop({
     type: Number,
@@ -30,21 +30,21 @@ export class CommentEntity extends defaultClasses.TimeStamps {
     min: Rating.Min,
     max: Rating.Max,
   })
-  rating!: number;
+  public rating!: number;
 
   @prop({
     type: String,
     ref: OfferEntity,
     required: true,
   })
-  offerId!: Ref<OfferEntity>;
+  public offerId!: Ref<OfferEntity>;
 
   @prop({
     type: String,
     required: true,
     ref: UserEntity,
   })
-  userId!: Ref<UserEntity>;
+  public userId!: Ref<UserEntity>;
 }
 
 export const CommentModel = getModelForClass(CommentEntity);

@@ -24,38 +24,38 @@ export class OfferEntity extends defaultClasses.TimeStamps {
     minlength: TitleLength.Min,
     maxlength: TitleLength.Max,
   })
-  title!: string;
+  public title!: string;
 
   @prop({
     required: true,
     min: BedroomsCount.Min,
     max: BedroomsCount.Max,
   })
-  bedrooms!: number;
+  public bedrooms!: number;
 
   @prop({
     required: true,
     min: GuestCount.Min,
     max: GuestCount.Max,
   })
-  maxAdults!: number;
+  public maxAdults!: number;
 
   @prop({
     type: () => String,
     required: true,
     enum: CityNames,
   })
-  city!: CityNames;
+  public city!: CityNames;
 
   @prop({
     required: true,
     default: [],
     type: () => [String],
   })
-  comfort!: ComfortType[];
+  public comfort!: ComfortType[];
 
   @prop({required: true, default: Date.now})
-  date!: Date;
+  public date!: Date;
 
   @prop({
     trim: true,
@@ -63,26 +63,26 @@ export class OfferEntity extends defaultClasses.TimeStamps {
     minlength: DescriptionLength.Min,
     maxlength: DescriptionLength.Max,
   })
-  description!: string;
+  public description!: string;
 
   @prop({
     type: () => [String],
     default: [],
     required: true,
   })
-  images!: string[];
+  public images!: string[];
 
   @prop({
     require: true,
     default: false,
   })
-  isPremium!: boolean;
+  public isPremium!: boolean;
 
   @prop({
     require: true,
     default: false,
   })
-  isFavorite!: boolean;
+  public isFavorite!: boolean;
 
   @prop({
     required: true,
@@ -92,40 +92,40 @@ export class OfferEntity extends defaultClasses.TimeStamps {
       'The avatar image must match the format .jpg or .png',
     ],
   })
-  preview!: string;
+  public preview!: string;
 
   @prop({
     required: true,
     min: Price.Min,
     max: Price.Max,
   })
-  price!: number;
+  public price!: number;
 
   @prop({
     required: true,
     min: Rating.Min,
     max: Rating.Max,
   })
-  rating!: number;
+  public rating!: number;
 
   @prop({
     type: () => String,
     required: true,
     enum: HousingType,
   })
-  type: HousingType;
+  public type: HousingType;
 
   @prop({ default: 0 })
-  commentCount!: number;
+  public commentCount!: number;
 
   @prop({
     ref: UserEntity,
     required: true,
   })
-  userId!: Ref<UserEntity>;
+  public userId!: Ref<UserEntity>;
 
   @prop({required: true})
-  location: LocationType;
+  public location: LocationType;
 }
 
 export const OfferModel = getModelForClass(OfferEntity);

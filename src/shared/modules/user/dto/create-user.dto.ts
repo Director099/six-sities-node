@@ -14,25 +14,25 @@ export class CreateUserDto {
   @Length(NameLength.Min, NameLength.Max, {
     message: UserMessages.name.lengthField,
   })
-  name: string;
+  public name: string;
 
   @IsEmail({}, { message: UserMessages.email.invalidFormat })
-  email: string;
+  public email: string;
 
   @IsOptional()
   @Matches(IMAGE_REGEX, {
     message: UserMessages.avatarUrl.matches,
   })
-  avatarUrl: string;
+  public avatarUrl: string;
 
   @IsBoolean({
     message: UserMessages.isPro.invalid,
   })
-  isPro: boolean;
+  public isPro: boolean;
 
   @IsString({ message: UserMessages.password.invalidFormat })
   @Length(PasswordLength.Min, PasswordLength.Max, {
     message: UserMessages.password.lengthField,
   })
-  password: string;
+  public password: string;
 }
