@@ -9,7 +9,6 @@ export interface OfferEntity extends defaultClasses.Base {}
 @modelOptions({
   schemaOptions: {
     collection: 'offer',
-    timestamps: true,
   },
   options: {
     allowMixed: Severity.ALLOW
@@ -105,6 +104,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
     required: true,
     min: Rating.Min,
     max: Rating.Max,
+    default: 0
   })
   public rating!: number;
 

@@ -46,11 +46,7 @@ export type OfferType = {
   images: string[],
   host: HostType,
   isPremium: boolean,
-  isFavorite: boolean,
-  rating: number,
   bedrooms: number,
   maxAdults: number,
-  commentCount: number,
-  comments: CommentsType,
   location: LocationType
 }

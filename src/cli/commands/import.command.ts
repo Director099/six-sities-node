@@ -1,7 +1,7 @@
 import { ICommand } from './command.interface.js';
 import { TSVFileReader } from '../../shared/libs/file-reader/index.js';
 import { createOffer, getErrorMessage, getMongoURI } from '../../shared/helpers/index.js';
-import { IUserService } from '../../shared/modules/user/types/index.js';
+import { IUserService } from '../../shared/modules/user/index.js';
 import { DefaultOfferService, OfferModel, IOfferService } from '../../shared/modules/offer/index.js';
 import { IDatabaseClient, MongoDatabaseClient } from '../../shared/libs/database-client/index.js';
 import { ILogger } from '../../shared/libs/logger/index.js';
@@ -52,14 +52,11 @@ export class ImportCommand implements ICommand {
       city: offer.city,
       preview: offer.preview,
       images: offer.images,
-      isFavorite: offer.isFavorite,
       isPremium: offer.isPremium,
       type: offer.type,
       bedrooms: offer.bedrooms,
       maxAdults: offer.maxAdults,
       price: offer.price,
-      rating: offer.rating,
-      commentCount: offer.commentCount,
       location: offer.location,
       comfort: offer.comfort,
     });
