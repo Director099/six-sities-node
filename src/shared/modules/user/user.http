@@ -6,10 +6,10 @@ Content-Type: application/json
 
 {
   "isPro": true,
-  "name": "Yarick",
-  "email": "torans@overlook.net",
+  "name": "Yarick2",
+  "email": "torans2@overlook.net",
   "avatarUrl": "torrance.png",
-  "password": "shining"
+  "password": "shining2"
 }
 
 ###
@@ -20,22 +20,28 @@ POST http://localhost:5000/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "torans@overlook.net",
-  "password": "shining"
+  "email": "torans2@overlook.net",
+  "password": "shining2"
 }
 
 ###
 
 ## Отправить изображение
-
-POST http://localhost:5000/users/6804b09a7839858bcb07c79b/avatar HTTP/1.1
+### TODO: Не доделал, не могу найти верный путь 7лекция 2.02
+POST http://localhost:5000/users/67b8164428f38fa869c8847c/avatar HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="avatar"; filename="screen.png"
 Content-Type: image/png
 
-< /Users/iMusin/Desktop/learning-frontend/html-academy/node-js/1177121-six-cities-6/markup/img/avatar-angelina.jpg
+< С:/jobs/six-cities(node)/markup/img/avatar-angelina.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
+###
+
+## Проверка статуса пользователя
+## TODO: Почему Инвалид
+GET http://localhost:5000/users/login/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuczJAb3Zlcmxvb2submV0IiwibmFtZSI6IllhcmljazIiLCJpZCI6IjY4MDYzM2YxOGUwN2QxNDkyNmNkODA3ZCIsImlhdCI6MTc0NTIzNjk4MiwiZXhwIjoxNzQ1NDA5NzgyfQ.-NzYtOtk_JXbQbRUymqzZOmqa8aFgqfqlOpOCvSzYSI
 ###

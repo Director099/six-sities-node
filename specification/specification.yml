@@ -505,7 +505,7 @@ components:
       properties:
         token:
           type: string
-          example: 6329c3d6a04ab1061c6425ea
+          example: Bearer 6329c3d6a04ab1061c6425ea
 
     userTokenError:
       type: object

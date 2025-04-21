@@ -1,11 +1,12 @@
-import { DocumentType, types } from '@typegoose/typegoose';
-import { inject, injectable } from 'inversify';
-import {OfferCount, DEFAULT_COMMENT_COUNT} from '../../constants/index.js';
-import { Component, SortType } from '../../types/index.js';
-import { ILogger } from '../../libs/logger/index.js';
-import { IOfferService } from './types/index.js';
-import { CreateOfferDto, UpdateOfferDto } from './dto/index.js';
-import { OfferEntity } from './offer.entity.js';
+import {DocumentType, types} from '@typegoose/typegoose';
+import {Types} from 'mongoose';
+import {inject, injectable} from 'inversify';
+import {DEFAULT_COMMENT_COUNT, OfferCount} from '../../constants/index.js';
+import {Component, SortType} from '../../types/index.js';
+import {ILogger} from '../../libs/logger/index.js';
+import {IOfferService} from './types/index.js';
+import {CreateOfferDto, UpdateOfferDto} from './dto/index.js';
+import {OfferEntity} from './offer.entity.js';
 
 @injectable()
 export class DefaultOfferService implements IOfferService {
@@ -19,6 +20,25 @@ export class DefaultOfferService implements IOfferService {
       $addFields: {
         id: '$_id',
       },
+    },
+  ];
+
+  #usersLookup = [
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'userId',
+        foreignField: '_id',
+        as: 'users',
+      },
+    },
+    {
+      $addFields: {
+        author: { $arrayElemAt: ['$users', 0] },
+      },
+    },
+    {
+      $unset: ['users'],
     },
   ];
 
@@ -60,16 +80,14 @@ export class DefaultOfferService implements IOfferService {
   }
 
   async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel
-      .aggregate([
+    return await this.offerModel
+      .aggregate<DocumentType<OfferEntity>>([
         {
-          $match: {
-            $expr: {
-              $eq: ['$_id', { $toObjectId: offerId }],
-            },
-          },
+          $match: {_id: new Types.ObjectId(offerId)},
         },
+        ...this.#addFieldId,
         ...this.#commentsLookup,
+        ...this.#usersLookup,
       ])
       .exec()
       .then(([result]) => result ?? null);
@@ -105,6 +123,7 @@ export class DefaultOfferService implements IOfferService {
     return await this.offerModel
       .aggregate([
         ...this.#addFieldId,
+        ...this.#usersLookup,
         ...this.#commentsLookup,
         { $limit: limit },
         { $sort: { createdAt: SortType.Down } },
@@ -114,7 +133,7 @@ export class DefaultOfferService implements IOfferService {
 
   async incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null> {
     return this.offerModel
-      .findByIdAndUpdate(offerId, { $inc: { commentCount: 1, }, })
+      .findByIdAndUpdate(offerId, { $inc: { commentCount: 1 } })
       .exec();
   }
 

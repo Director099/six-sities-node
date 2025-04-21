@@ -7,7 +7,6 @@ import {
   IsEnum,
   IsIn,
   IsInt,
-  IsMongoId,
   IsOptional,
   Matches,
   Max,
@@ -107,7 +106,6 @@ export class CreateOfferDto {
   })
   public maxAdults: number;
 
-  @IsMongoId({ message: OfferValidationMessage.userId.invalidId })
   public userId: string;
 
   @ValidateNested()

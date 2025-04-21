@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import {
   BaseController, DocumentExistsMiddleware,
-  HttpMethod, ValidateDtoMiddleware,
+  HttpMethod, PrivateRouteMiddleware, ValidateDtoMiddleware,
   ValidateObjectIdMiddleware,
 } from '../../libs/rest/index.js';
 import { Component } from '../../types/index.js';
@@ -28,7 +28,10 @@ export class CommentController extends BaseController {
       path: '/',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateCommentDto)],
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateDtoMiddleware(CreateCommentDto)
+      ],
     });
     this.addRoute({
       path: '/offerId',
@@ -41,9 +44,12 @@ export class CommentController extends BaseController {
     });
   }
 
-  async create({ body } : Request, res: Response): Promise<void> {
+  async create({ body, tokenPayload } : Request, res: Response): Promise<void> {
     const offerId = body.offerId;
-    const comment = this.commentService.create(body);
+    const comment = await this.commentService.create({
+      ...body,
+      userId: tokenPayload.id,
+    });
 
     await this.offerService.incCommentCount(offerId);
     this.created(res, fillDTO(CommentRdo, comment));
