@@ -27,15 +27,14 @@ Content-Type: application/json
 ###
 
 ## Отправить изображение
-### TODO: Не доделал, не могу найти верный путь 7лекция 2.02
-POST http://localhost:5000/users/67b8164428f38fa869c8847c/avatar HTTP/1.1
+POST http://localhost:5000/users/680633f18e07d14926cd807d/avatar HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="avatar"; filename="screen.png"
 Content-Type: image/png
 
-< С:/jobs/six-cities(node)/markup/img/avatar-angelina.jpg
+< /jobs/six-cities(node)/markup/img/avatar-angelina.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###
@@ -43,5 +42,5 @@ Content-Type: image/png
 ## Проверка статуса пользователя
 ## TODO: Почему Инвалид
 GET http://localhost:5000/users/login/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuczJAb3Zlcmxvb2submV0IiwibmFtZSI6IllhcmljazIiLCJpZCI6IjY4MDYzM2YxOGUwN2QxNDkyNmNkODA3ZCIsImlhdCI6MTc0NTIzNjk4MiwiZXhwIjoxNzQ1NDA5NzgyfQ.-NzYtOtk_JXbQbRUymqzZOmqa8aFgqfqlOpOCvSzYSI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuczJAb3Zlcmxvb2submV0IiwibmFtZSI6IllhcmljazIiLCJpZCI6IjY4MDYzM2YxOGUwN2QxNDkyNmNkODA3ZCIsImlhdCI6MTc0NTM4MDMxOCwiZXhwIjoxNzQ1NTUzMTE4fQ.JrSwwzEGXoDRmGm-7iTzUM5b-9TcR9J1qSZA1XajakM
 ###
