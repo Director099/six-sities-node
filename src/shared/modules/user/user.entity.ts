@@ -29,7 +29,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements HostType {
     match: [IMAGE_REGEX, 'The avatar image must match the format .jpg or .png'],
     default: DEFAULT_AVATAR,
   })
-  public avatarUrl?: string;
+  public avatarUrl: string;
 
   @prop({
     required: true,

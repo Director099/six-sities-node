@@ -25,7 +25,7 @@ export type ComfortType = 'Breakfast' | 'Air conditioning' | 'Laptop friendly wo
 export type HostType = {
   isPro: boolean,
   name: string,
-  avatarUrl?: string,
+  avatarUrl: string,
   email: string,
 };
 
