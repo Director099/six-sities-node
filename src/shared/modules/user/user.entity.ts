@@ -21,7 +21,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements HostType {
     unique: true,
     match: [EMAIL_REGEX, 'Email is incorrect'],
   })
-  public email: string;
+  public email!: string;
 
   @prop({
     required: false,
@@ -29,7 +29,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements HostType {
     match: [IMAGE_REGEX, 'The avatar image must match the format .jpg or .png'],
     default: DEFAULT_AVATAR,
   })
-  public avatarUrl: string;
+  public avatarUrl?: string;
 
   @prop({
     required: true,
@@ -40,7 +40,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements HostType {
   public name!: string;
 
   @prop({ required: true, default: false })
-  public isPro: boolean;
+  public isPro!: boolean;
 
   @prop({ required: true, default: '' })
   public password?: string;
