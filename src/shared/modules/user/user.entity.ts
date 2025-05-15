@@ -1,3 +1,4 @@
+import {Types} from 'mongoose';
 import { defaultClasses, getModelForClass, prop, modelOptions } from '@typegoose/typegoose';
 import {HostType} from '../../types/index.js';
 import {NameLength, DEFAULT_AVATAR, EMAIL_REGEX, IMAGE_REGEX} from '../../constants/index.js';
@@ -44,6 +45,12 @@ export class UserEntity extends defaultClasses.TimeStamps implements HostType {
 
   @prop({ required: true, default: '' })
   public password?: string;
+
+  @prop({
+    type: Types.ObjectId,
+    default: [],
+  })
+  public favoriteOffers: Types.Array<Types.ObjectId>;
 
   constructor(userData: HostType) {
     super();

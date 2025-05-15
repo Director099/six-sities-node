@@ -7,7 +7,6 @@ Content-Type: application/json
 {
   "description": "Тест сообщения",
   "rating": 5,
-  "offerId": "6804b09a7839858bcb07c79b",
   "userId": "67b821a447c8fc70447fdf81"
 }
 

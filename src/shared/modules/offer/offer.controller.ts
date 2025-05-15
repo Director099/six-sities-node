@@ -4,14 +4,15 @@ import {StatusCodes} from 'http-status-codes';
 import {
   BaseController, DocumentExistsMiddleware,
   HttpError,
-  HttpMethod, PrivateRouteMiddleware,
+  HttpMethod, PrivateRouteMiddleware, RequestBodyType,
   ValidateDtoMiddleware,
-  ValidateObjectIdMiddleware
+  ValidateObjectIdMiddleware, ValidateUserMiddleware
 } from '../../libs/rest/index.js';
 import { ILogger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import {capitalizeFirstLetter, checkCity, fillDTO, getNumberOrUndefined} from '../../helpers/index.js';
 import {CommentRdo, ICommentService} from '../comment/index.js';
+import {Path} from '../../constants/index.js';
 import {
   IOfferService,
   CreateOfferRequestType,
@@ -19,7 +20,7 @@ import {
   ParamOfferIdType,
   FindOfferRequestType
 } from './types/index.js';
-import { OfferRdo } from './rdo/offer.rdo.js';
+import { OfferRdo } from './rdo/index.js';
 import {CreateOfferDto, UpdateOfferDto} from './dto/index.js';
 
 @injectable()
@@ -33,9 +34,13 @@ export class OfferController extends BaseController {
 
     this.logger.info('Register routes for OfferController…');
 
-    this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.index });
     this.addRoute({
-      path: '/',
+      path: Path.Index,
+      method: HttpMethod.Get,
+      handler: this.index
+    });
+    this.addRoute({
+      path: Path.Create,
       method: HttpMethod.Post,
       handler: this.create,
       middlewares: [
@@ -44,7 +49,7 @@ export class OfferController extends BaseController {
       ],
     });
     this.addRoute({
-      path: '/:offerId',
+      path: Path.Update,
       method: HttpMethod.Patch,
       handler: this.update,
       middlewares: [
@@ -52,20 +57,22 @@ export class OfferController extends BaseController {
         new ValidateObjectIdMiddleware('offerId'),
         new ValidateDtoMiddleware(UpdateOfferDto),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
+        new ValidateUserMiddleware(this.offerService, 'Offer', 'offerId'),
       ]
     });
     this.addRoute({
-      path: '/:offerId',
+      path: Path.Delete,
       method: HttpMethod.Delete,
       handler: this.delete,
       middlewares: [
         new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
+        new ValidateUserMiddleware(this.offerService, 'Offer', 'offerId'),
       ]
     });
     this.addRoute({
-      path: '/:offerId',
+      path: Path.Show,
       method: HttpMethod.Get,
       handler: this.show,
       middlewares: [
@@ -73,15 +80,19 @@ export class OfferController extends BaseController {
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
       ]
     });
-    this.addRoute({ path: '/premium/:city', method: HttpMethod.Get, handler: this.getPremium });
     this.addRoute({
-      path: '/favorites',
+      path: Path.Premium,
+      method: HttpMethod.Get,
+      handler: this.getPremium
+    });
+    this.addRoute({
+      path: Path.Favorites,
       method: HttpMethod.Get,
       handler: this.getFavorites,
       middlewares: [new PrivateRouteMiddleware()],
     });
     this.addRoute({
-      path: '/:offerId/favorite',
+      path: Path.toggleFavorites,
       method: HttpMethod.Get,
       handler: this.updateFavorite,
       middlewares: [
@@ -91,7 +102,7 @@ export class OfferController extends BaseController {
       ]
     });
     this.addRoute({
-      path: '/:offerId/comments',
+      path: Path.Comments,
       method: HttpMethod.Get,
       handler: this.getComments,
       middlewares: [
@@ -110,7 +121,7 @@ export class OfferController extends BaseController {
 
   async create({ body, tokenPayload }: CreateOfferRequestType, res: Response): Promise<void> {
     const offer = await this.offerService.create({ ...body, userId: tokenPayload.id });
-    this.created(res, offer);
+    this.created(res, fillDTO(OfferRdo, offer));
   }
 
   async update({ body, params: { offerId } }: UpdateOfferRequestType, res: Response): Promise<void> {
@@ -149,20 +160,32 @@ export class OfferController extends BaseController {
     this.ok(res, fillDTO(OfferRdo, premiumOffers));
   }
 
-  async getFavorites(_req: Request, _res: Response):Promise<void>{
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented',
-      'OfferController'
-    );
+  async getFavorites({ tokenPayload: { id } }: Request, res: Response):Promise<void>{
+    const offers = await this.offerService.findFavorites(id);
+
+    this.ok(res, fillDTO(OfferRdo, offers));
   }
 
-  async updateFavorite(_req: Request, _res: Response):Promise<void>{
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented',
-      'OfferController'
+  async updateFavorite(
+    {
+      params: { offerId },
+      tokenPayload: { id },
+      body,
+    }: Request<ParamOfferIdType, RequestBodyType, { isFavorite: string }>,
+    res: Response
+  ):Promise<void>{
+    const isFavorite: boolean = JSON.parse(body.isFavorite);
+    const userId = id;
+
+    const offer = await this.offerService.toggleFavorite(
+      userId,
+      offerId,
+      isFavorite
     );
+
+    this.ok(res, {
+      favorites: offer,
+    });
   }
 
   async getComments(

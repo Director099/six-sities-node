@@ -9,7 +9,9 @@ export interface IOfferService {
   find(count?: number): Promise<DocumentType<OfferEntity>[]>;
   findById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   findPremium(city: string): Promise<DocumentType<OfferEntity>[]>;
-  findFavorites(): Promise<DocumentType<OfferEntity>[]>;
+  findFavorites(userId: string): Promise<DocumentType<OfferEntity>[]>;
+  toggleFavorite(userId: string, offerId: string, isFavorite: boolean): Promise<boolean>;
   incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   exists(documentId: string): Promise<boolean>;
+  isUser(userId: string, documentId: string): Promise<boolean>;
 }
