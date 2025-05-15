@@ -1,5 +1,4 @@
 import {DocumentType, types} from '@typegoose/typegoose';
-import {Types} from 'mongoose';
 import {inject, injectable} from 'inversify';
 import {DEFAULT_COMMENT_COUNT, OfferCount} from '../../constants/index.js';
 import {Component, SortType} from '../../types/index.js';
@@ -20,25 +19,6 @@ export class DefaultOfferService implements IOfferService {
       $addFields: {
         id: '$_id',
       },
-    },
-  ];
-
-  #usersLookup = [
-    {
-      $lookup: {
-        from: 'users',
-        localField: 'userId',
-        foreignField: '_id',
-        as: 'users',
-      },
-    },
-    {
-      $addFields: {
-        author: { $arrayElemAt: ['$users', 0] },
-      },
-    },
-    {
-      $unset: ['users'],
     },
   ];
 
@@ -80,17 +60,9 @@ export class DefaultOfferService implements IOfferService {
   }
 
   async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    return await this.offerModel
-      .aggregate<DocumentType<OfferEntity>>([
-        {
-          $match: {_id: new Types.ObjectId(offerId)},
-        },
-        ...this.#addFieldId,
-        ...this.#commentsLookup,
-        ...this.#usersLookup,
-      ])
-      .exec()
-      .then(([result]) => result ?? null);
+    const offer = await this.offerModel.findById(offerId).populate(['userId']);
+
+    return offer;
   }
 
   async findPremium(city: string): Promise<DocumentType<OfferEntity>[]> {
@@ -101,15 +73,16 @@ export class DefaultOfferService implements IOfferService {
             $and: [{ isPremium: true }, { city: city }],
           },
         },
+        ...this.#addFieldId,
         ...this.#commentsLookup,
         { $limit: OfferCount.Premium },
-        { $sort: { publicationDate: SortType.Down } },
+        { $sort: { createdAt: SortType.Down } },
       ])
       .exec();
   }
 
   async findFavorites(): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel
+    return await this.offerModel
       .find({ favorites: true })
       .sort({ createdAt: SortType.Down })
       .populate('userId')
@@ -119,16 +92,16 @@ export class DefaultOfferService implements IOfferService {
   async find(count?: number): Promise<DocumentType<OfferEntity>[]> {
     const limit = count ?? DEFAULT_COMMENT_COUNT;
 
-    // TODO Надо ли возвращать user
-    return await this.offerModel
+    const offers = await this.offerModel
       .aggregate([
         ...this.#addFieldId,
-        ...this.#usersLookup,
         ...this.#commentsLookup,
         { $limit: limit },
         { $sort: { createdAt: SortType.Down } },
       ])
       .exec();
+
+    return this.offerModel.populate(offers, { path: 'userId' });
   }
 
   async incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null> {

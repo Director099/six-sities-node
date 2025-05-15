@@ -102,10 +102,10 @@ export class OfferController extends BaseController {
   }
 
   async index({ query: { limit } }: FindOfferRequestType, res: Response): Promise<void> {
-    const offers = await this.offerService.find(limit);
-    const responseData = fillDTO(OfferRdo, offers);
+    const count = getNumberOrUndefined(limit);
+    const offers = await this.offerService.find(count);
 
-    this.ok(res, responseData);
+    this.ok(res, fillDTO(OfferRdo, offers));
   }
 
   async create({ body, tokenPayload }: CreateOfferRequestType, res: Response): Promise<void> {
@@ -113,21 +113,24 @@ export class OfferController extends BaseController {
     this.created(res, offer);
   }
 
-  async update({ body, params }: UpdateOfferRequestType, res: Response): Promise<void> {
-    const offer = this.offerService.updateById(params.offerId, body);
-    const responseData = fillDTO(OfferRdo, offer);
+  async update({ body, params: { offerId } }: UpdateOfferRequestType, res: Response): Promise<void> {
+    const updateOffer = await this.offerService.updateById(offerId, body);
 
-    this.ok(res, responseData);
+    this.ok(res, fillDTO(OfferRdo, updateOffer));
   }
 
-  async delete({params}: Request, res: Response): Promise<void> {
-    const existsOffer = await this.offerService.deleteById(params.offerId);
-    this.noContent(res, existsOffer);
+  async delete({ params: { offerId } }: Request<ParamOfferIdType>, res: Response): Promise<void> {
+    const offer = await this.offerService.deleteById(offerId);
+
+    await this.commentService.deleteByOfferId(offerId);
+
+    this.noContent(res, offer);
   }
 
-  async show({ params }: Request, res: Response):Promise<void>{
-    const existsOffer = await this.offerService.findById(params.offerId);
-    this.ok(res, fillDTO(OfferRdo, existsOffer));
+  async show({ params: { offerId } }: Request<ParamOfferIdType>, res: Response): Promise<void> {
+    const offer = await this.offerService.findById(offerId);
+
+    this.ok(res, fillDTO(OfferRdo, offer));
   }
 
   async getPremium({ params }: Request, res: Response):Promise<void>{
