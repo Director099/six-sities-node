@@ -12,6 +12,7 @@ import { ILogger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import { fillDTO } from '../../helpers/index.js';
 import { IConfig, RestSchemaType } from '../../libs/config/index.js';
+import {Env, Path} from '../../constants/index.js';
 import { IAuthService } from '../auth/index.js';
 import { CreateUserDto, LoginUserDto } from './dto/index.js';
 import { LoggedUserRdo, UserRdo } from './rdo/index.js';
@@ -29,24 +30,24 @@ export class UserController extends BaseController {
     this.logger.info('Register routes for UserController...');
 
     this.addRoute({
-      path: '/register',
+      path: Path.Register,
       method: HttpMethod.Post,
       handler: this.create,
       middlewares: [new ValidateDtoMiddleware(CreateUserDto)],
     });
     this.addRoute({
-      path: '/login',
+      path: Path.Login,
       method: HttpMethod.Post,
       handler: this.login,
       middlewares: [new ValidateDtoMiddleware(LoginUserDto)],
     });
     this.addRoute({
-      path: '/logout',
+      path: Path.Logout,
       method: HttpMethod.Post,
       handler: this.logout,
     });
     this.addRoute({
-      path: '/login',
+      path: Path.Login,
       method: HttpMethod.Get,
       handler: this.checkAuthToken,
       middlewares: [
@@ -54,13 +55,13 @@ export class UserController extends BaseController {
       ],
     });
     this.addRoute({
-      path: '/:userId/avatar',
+      path: Path.UserIdAvatar,
       method: HttpMethod.Post,
       handler: this.uploadAvatar,
       middlewares: [
         new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('userId'),
-        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'avatar'), //TODO: Добавить в переменную
+        new UploadFileMiddleware(this.configService.get(Env.UploadDirectory), 'avatar'),
       ],
     });
   }
@@ -81,7 +82,7 @@ export class UserController extends BaseController {
 
     const result = await this.userService.create(
       body,
-      this.configService.get('SALT')
+      this.configService.get(Env.Salt)
     );
     this.created(res, fillDTO(UserRdo, result));
   }

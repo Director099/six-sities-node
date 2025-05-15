@@ -1,12 +1,10 @@
 import {
   IsBoolean,
   IsEmail,
-  IsOptional,
   IsString,
   Length,
-  Matches,
 } from 'class-validator';
-import { IMAGE_REGEX, PasswordLength, NameLength } from '../../../constants/index.js';
+import { PasswordLength, NameLength } from '../../../constants/index.js';
 import { UserMessages } from './user.messages.js';
 
 export class CreateUserDto {
@@ -18,12 +16,6 @@ export class CreateUserDto {
 
   @IsEmail({}, { message: UserMessages.email.invalidFormat })
   public email: string;
-
-  @IsOptional()
-  @Matches(IMAGE_REGEX, {
-    message: UserMessages.avatarUrl.matches,
-  })
-  public avatarUrl: string;
 
   @IsBoolean({
     message: UserMessages.isPro.invalid,

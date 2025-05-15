@@ -4,6 +4,7 @@ import { SignJWT } from 'jose';
 import { Component } from '../../types/index.js';
 import { ILogger } from '../../libs/logger/index.js';
 import { IConfig, RestSchemaType } from '../../libs/config/index.js';
+import {Env} from '../../constants/index.js';
 import { LoginUserDto, UserEntity, IUserService } from '../user/index.js';
 import { IAuthService, TokenPayloadType } from './types/index.js';
 import { UserNotFoundException, UserPasswordIncorrectException } from './errors/index.js';
@@ -41,7 +42,7 @@ export class DefaultAuthService implements IAuthService {
       throw new UserNotFoundException();
     }
 
-    if (!user.verifyPassword(dto.password, this.config.get('SALT'))) {
+    if (!user.verifyPassword(dto.password, this.config.get(Env.Salt))) {
       this.logger.warn(`Incorrect password for ${dto.email}`);
       throw new UserPasswordIncorrectException();
     }

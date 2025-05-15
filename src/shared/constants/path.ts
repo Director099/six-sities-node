@@ -8,4 +8,8 @@ export const Path = {
   Favorites: '/favorites',
   toggleFavorites: '/:offerId/favorites',
   Comments: '/:offerId/comments',
+  Register: '/register',
+  Login: '/login',
+  Logout: '/logout',
+  UserIdAvatar: '/:userId/avatar',
 };

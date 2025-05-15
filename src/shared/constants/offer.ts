@@ -1,5 +1,5 @@
 export const PHOTO_QUANTITY = 6;
-export const IMAGE_REGEX = /\.(jpg|png)(\?.*)?$/i;
+export const IMAGE_REGEX = /\.(jpg|png|svg)(\?.*)?$/i;
 
 export const OfferCount = {
   Default: 60,

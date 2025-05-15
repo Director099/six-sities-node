@@ -1,7 +1,7 @@
 import {Types} from 'mongoose';
 import { defaultClasses, getModelForClass, prop, modelOptions } from '@typegoose/typegoose';
 import {HostType} from '../../types/index.js';
-import {NameLength, DEFAULT_AVATAR, EMAIL_REGEX, IMAGE_REGEX} from '../../constants/index.js';
+import {NameLength, EMAIL_REGEX} from '../../constants/index.js';
 import { createSHA256 } from '../../helpers/index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
@@ -25,12 +25,11 @@ export class UserEntity extends defaultClasses.TimeStamps implements HostType {
   public email!: string;
 
   @prop({
+    type: String,
     required: false,
     trim: true,
-    match: [IMAGE_REGEX, 'The avatar image must match the format .jpg or .png'],
-    default: DEFAULT_AVATAR,
   })
-  public avatarUrl: string;
+  public avatarUrl?: string;
 
   @prop({
     required: true,

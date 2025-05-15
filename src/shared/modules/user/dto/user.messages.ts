@@ -9,7 +9,7 @@ export const UserMessages = {
     invalidFormat: 'Email must be a valid address',
   },
   avatarUrl: {
-    matches: 'The image must match the format .jpg or .png',
+    matches: 'The image must match the format .jpg, .png or .png',
   },
   isPro: {
     invalid: 'Field isPro must be an boolean',

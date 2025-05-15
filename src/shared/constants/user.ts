@@ -1,6 +1,6 @@
 export const EMAIL_REGEX = /^([\w-\\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
-export const DEFAULT_AVATAR = 'avatar.jpg';
+export const DEFAULT_AVATAR = 'avatar.svg';
 
 export const NameLength = {
   Min: 1,

@@ -1,5 +1,7 @@
 import chalk from 'chalk';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
+import { ValidationError } from 'class-validator';
+import { ApplicationError, ValidationErrorFieldType } from '../libs/rest/index.js';
 import {MessageStatus} from '../constants/index.js';
 import {CityNames} from '../types/index.js';
 
@@ -28,10 +30,8 @@ export function fillDTO<T, V>(someDto: ClassConstructor<T>, plainObject: V) {
   });
 }
 
-export function createErrorObject(message: string) {
-  return {
-    error: message,
-  };
+export function createErrorObject(errorType: ApplicationError, error: string, details: ValidationErrorFieldType[] = []) {
+  return {errorType, error, details};
 }
 
 export function checkString(data: unknown) {
@@ -63,4 +63,16 @@ export function getNumberOrUndefined(data: unknown) {
 
 export function formatsObjectToString(obj: Record<string, string>) {
   return Object.values(obj).join(', ');
+}
+
+export function reduceValidationErrors(errors: ValidationError[]): ValidationErrorFieldType[] {
+  return errors.map(({ property, value, constraints}) => ({
+    property,
+    value,
+    messages: constraints ? Object.values(constraints) : []
+  }));
+}
+
+export function getFullServerPath(host: string, port: number) {
+  return `http://${host}:${port}`;
 }
