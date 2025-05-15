@@ -9,6 +9,7 @@ import {
   IExceptionFilter,
   ValidationExceptionFilter
 } from '../shared/libs/rest/index.js';
+import {PathTransformer} from '../shared/libs/rest/transform/index.js';
 import { RestApplication } from './rest.application.js';
 
 export function createRestApplicationContainer() {
@@ -21,6 +22,7 @@ export function createRestApplicationContainer() {
   restApplicationContainer.bind<IExceptionFilter>(Component.ExceptionFilter).to(AppExceptionFilter).inSingletonScope();
   restApplicationContainer.bind<IExceptionFilter>(Component.HttpExceptionFilter).to(HttpErrorExceptionFilter).inSingletonScope();
   restApplicationContainer.bind<IExceptionFilter>(Component.ValidationExceptionFilter).to(ValidationExceptionFilter).inSingletonScope();
+  restApplicationContainer.bind<PathTransformer>(Component.PathTransformer).to(PathTransformer).inSingletonScope();
 
   return restApplicationContainer;
 }

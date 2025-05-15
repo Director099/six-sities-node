@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { Component } from '../../../types/index.js';
 import { FilePath } from '../../../../rest/index.js';
 import { getFullServerPath } from '../../../helpers/index.js';
+import {Env} from '../../../constants/index.js';
 import { ILogger } from '../../logger/index.js';
 import { IConfig, RestSchemaType } from '../../config/index.js';
 import { DEFAULT_STATIC_IMAGES, STATIC_RESOURCE_FIELDS } from './path-transformer.constant.js';
@@ -42,12 +43,10 @@ export class PathTransformer {
           }
 
           if (this.#isStaticProperty(key) && typeof value === 'string') {
-            const staticPath = FilePath.Static;
-            const uploadPath = FilePath.Upload;
-            const serverHost = this.config.get('HOST');
-            const serverPort = this.config.get('PORT');
+            const serverHost = this.config.get(Env.Host);
+            const serverPort = this.config.get(Env.Port);
 
-            const rootPath = this.#hasDefaultImage(value) ? staticPath : uploadPath;
+            const rootPath = this.#hasDefaultImage(value) ? FilePath.Static : FilePath.Upload;
             current[key] = `${getFullServerPath(serverHost, serverPort)}${rootPath}/${value}`;
           }
         }
