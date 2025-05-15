@@ -20,7 +20,7 @@ import {
   ParamOfferIdType,
   FindOfferRequestType
 } from './types/index.js';
-import { OfferRdo } from './rdo/index.js';
+import { OfferPreviewRdo, OfferRdo } from './rdo/index.js';
 import {CreateOfferDto, UpdateOfferDto} from './dto/index.js';
 
 @injectable()
@@ -116,7 +116,7 @@ export class OfferController extends BaseController {
     const count = getNumberOrUndefined(limit);
     const offers = await this.offerService.find(count);
 
-    this.ok(res, fillDTO(OfferRdo, offers));
+    this.ok(res, fillDTO(OfferPreviewRdo, offers));
   }
 
   async create({ body, tokenPayload }: CreateOfferRequestType, res: Response): Promise<void> {
@@ -157,13 +157,13 @@ export class OfferController extends BaseController {
 
     const premiumOffers = await this.offerService.findPremium(city);
 
-    this.ok(res, fillDTO(OfferRdo, premiumOffers));
+    this.ok(res, fillDTO(OfferPreviewRdo, premiumOffers));
   }
 
   async getFavorites({ tokenPayload: { id } }: Request, res: Response):Promise<void>{
     const offers = await this.offerService.findFavorites(id);
 
-    this.ok(res, fillDTO(OfferRdo, offers));
+    this.ok(res, fillDTO(OfferPreviewRdo, offers));
   }
 
   async updateFavorite(

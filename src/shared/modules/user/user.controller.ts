@@ -15,7 +15,7 @@ import { IConfig, RestSchemaType } from '../../libs/config/index.js';
 import {Env, Path} from '../../constants/index.js';
 import { IAuthService } from '../auth/index.js';
 import { CreateUserDto, LoginUserDto } from './dto/index.js';
-import { LoggedUserRdo, UserRdo } from './rdo/index.js';
+import { LoggedUserRdo, UserRdo, UploadUserAvatarRdo } from './rdo/index.js';
 import { CreateUserRequestType, LoginUserRequestType, IUserService } from './types/index.js';
 
 @injectable()
@@ -67,10 +67,18 @@ export class UserController extends BaseController {
   }
 
   async create(
-    { body }: CreateUserRequestType,
+    { body, tokenPayload }: CreateUserRequestType,
     res: Response,
   ): Promise<void> {
     const existsUser = await this.userService.findByEmail(body.email);
+
+    if (tokenPayload?.id) {
+      throw new HttpError(
+        StatusCodes.FORBIDDEN,
+        'Access Denied',
+        'User Controller'
+      );
+    }
 
     if (existsUser) {
       throw new HttpError(
@@ -123,9 +131,11 @@ export class UserController extends BaseController {
     this.ok(res, fillDTO(LoggedUserRdo, foundedUser));
   }
 
-  async uploadAvatar(req: Request, res: Response) {
-    this.created(res, {
-      filepath: req.file?.path,
-    });
+  async uploadAvatar({ params, file }: Request, res: Response) {
+    const { id } = params;
+    const uploadFile = { avatarUrl: file?.filename };
+
+    await this.userService.updateById(id, uploadFile);
+    this.created(res, fillDTO(UploadUserAvatarRdo, { filepath: uploadFile.avatarUrl }));
   }
 }
